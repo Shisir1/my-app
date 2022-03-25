@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect} from 'react';
+import List from './List.js';
+import {stories} from './stories';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+function App(){
+
+  const [state, setState] = useState(
+    () => localStorage.getItem('myCat' || 'React'));
+
+  useEffect(() => {
+    localStorage.setItem('myCat', state);
+  });
+
+  function handleChange(e) {
+    setState(e.target.value);
+  }
+
+function handleClick(){
+  setState('hello');
+
 }
+return (
+  <div>
+    <h1>Searching...</h1>
+    <label htmlFor='search'>Search: </label>
+    <input type='text' id='search' onChange={handleChange} value={state} />
 
-export default App;
+    <button onClick={handleClick}>Click Me</button>
+
+    <h2>Searching for: {state.a}</h2> {state}
+    <hr />
+
+    <List stories= {stories}>Hello</List>
+  </div>
+);
+  }
+
+  export default App;
